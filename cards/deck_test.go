@@ -20,19 +20,18 @@ func TestNewDeck(t *testing.T) {
 }
 
 func TestSaveToFileAndNewDeckFromFile(t *testing.T) {
-	err := os.Remove("_testfile")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer func() {
-		err := os.Remove("_testfile")
+	const f = "_testfile"
+	r := func() {
+		err := os.Remove(f)
 		if err != nil {
 			fmt.Println(err)
 		}
-	}()
+	}
+	r()
+	defer r()
 	d := newDeck()
-	d.saveToFile("_testfile")
-	d2 := newDeckFromFile("_testfile")
+	d.saveToFile(f)
+	d2 := newDeckFromFile(f)
 	if len(d) != len(d2) {
 		t.Errorf("Expected %v values loaded, but got %v", len(d), len(d2))
 	}
