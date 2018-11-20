@@ -5,29 +5,21 @@ import (
 )
 
 func main() {
-	var card string = "Ace of Spades"
-	fmt.Println(card)
-	var card2 = "Ace of Spades"
-	fmt.Println(card2)
-	card3 := "Ace of Spades"
-	fmt.Println(card3)
-	card3 = "Joker"
-	fmt.Println(card3)
-	pi := 3.14
-	fmt.Printf("%T\n", pi)
-
-	card4 := newCard()
-	fmt.Println(card4)
-
-	cards := []string{"Five of Diamonds", "Ace of Spades", newCard()}
-	fmt.Println(cards)
-	cards = append(cards, "Six of Spades")
-	fmt.Println(cards)
-	for i, v := range cards {
-		fmt.Println(i, v)
+	cards := newDeck()
+	cards.saveToFile("demo.deck")
+	cards = newDeckFromFile("demo.deck")
+	cards.shuffe()
+	cards.print()
+	fmt.Println("++++++++++++++++")
+	var hand deck
+	noh := len(cards) / 4
+	for i := 0; i < noh; i++ {
+		hand, cards = deal(cards, 4)
+		fmt.Println(hand)
 	}
-}
-
-func newCard() string {
-	return "Five of Diamonds"
+	dx := deck{"A", "B", "C"}
+	dx.print()
+	dx.saveToFile2("dx.txt")
+	dx = newDeckFromFile2("dx.txt")
+	dx.print()
 }
